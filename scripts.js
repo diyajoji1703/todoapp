@@ -4,17 +4,13 @@ let allMarked = false;
 // const btn = document.getElementById('show-all')
 // console.log(btn,'btn')
 
+
 function getTasks(category = "") {
-    if (category === "Active") 
-    {
+    if (category === "Active") {
         return Tasks.filter(task => task.status === "Active");
-    } 
-    else if (category === "Completed") 
-    {
+    } else if (category === "Completed") {
         return Tasks.filter(task => task.status === "Completed");
-    } 
-    else 
-    {
+    } else {
         return Tasks;
     }
 }
@@ -26,7 +22,6 @@ function addTask(taskData) {
 
 function deleteTask(id) {
     Tasks = Tasks.filter(task => task.id !== id);
-    // console.log('show');
     renderTasks();
 }
 
@@ -40,11 +35,6 @@ function updateTask(id, name) {
 
 function clearCompletedTasks() {
     Tasks = Tasks.filter(task => task.status !== "Completed");
-    renderTasks();
-}
-
-function clearAllTasks() {
-    Tasks = [];
     renderTasks();
 }
 
@@ -66,11 +56,9 @@ function renderTasks(filter = "") {
         taskItem.className = task.status === "Completed" ? "completed" : "";
         taskItem.innerHTML = `
             <div class="view">
-                <input class="toggle" type="checkbox" 
-                ${task.status === "Completed" ? "checked" : ""} 
-                onclick="toggleTaskStatus(${task.id})">
+                <input class="toggle" type="checkbox" ${task.status === "Completed" ? "checked" : ""} onclick="toggleTaskStatus(${task.id})">
                 <label ondblclick="editTask(${task.id}, '${task.name}')">${task.name}</label>
-                <button class="destroy" onclick="deleteTask(${task.id})">x</button>
+                <button class="destroy" onclick="deleteTask(${task.id})">×</button>
             </div>
         `;
         taskList.appendChild(taskItem);
@@ -93,7 +81,6 @@ document.getElementById('new-task').addEventListener('keypress', function(event)
 });
 
 document.getElementById('show-all').addEventListener('click', function() {
-
     filterTasks('');
 });
 
@@ -105,10 +92,9 @@ document.getElementById('show-completed').addEventListener('click', function() {
     filterTasks('Completed');
 });
 
-
-document.getElementById('toggle-all').addEventListener('click',function() {
-    toggleTaskStatus('');
-})
+document.getElementById('clear-completed').addEventListener('click', function() {
+    clearCompletedTasks();
+});
 
 const markAll = document.querySelector('.toggle-all');
 markAll.addEventListener('click', () => {
@@ -118,22 +104,13 @@ markAll.addEventListener('click', () => {
     renderTasks(Tasks);
     
 });
-
 function filterTasks(filter) {
     renderTasks(filter);
     document.querySelectorAll('.filters button').forEach(button => {
         button.classList.remove('selected');
     });
-    // document.getElementById(`show-${filter.toLowerCase() || 'all'}`).classList.add('selected');
-    if (filter === "Active") {
-        document.getElementById('show-active').classList.add('selected');
-    } else if (filter === "Completed") {
-        document.getElementById('show-completed').classList.add('selected');
-    } else {
-        document.getElementById('show-all').classList.add('selected');
-    }
+    document.getElementById(`show-${filter.toLowerCase() || 'all'}`).classList.add('selected');
 }
-
 
 function editTask(id, name) {
     const newName = prompt("Edit Task", name);
@@ -143,3 +120,13 @@ function editTask(id, name) {
 }
 
 renderTasks();
+
+
+
+  
+               
+
+
+   
+    
+  
